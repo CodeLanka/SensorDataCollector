@@ -34,7 +34,6 @@ Following are the labels we are going to collect the data for:
             </td>
         </tr>
         <tr>
-
             <td>Bus</td>
             <td rowspan=7>Road type:<ul>
                     <li>Highway</li>
@@ -57,7 +56,6 @@ Following are the labels we are going to collect the data for:
         </tr>
         <tr>
         <tr>
-
             <td>Walking</td>
             <td></td>
             <td></td>
@@ -86,7 +84,6 @@ Following are the labels we are going to collect the data for:
                     <li>passenger</li>
                 </ul>
             </td>
-
             <td></td>
         </tr>
         <tr>
