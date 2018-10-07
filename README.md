@@ -97,3 +97,35 @@ Following are the labels we are going to collect the data for:
         </tr>
     </tbody>
 </table>
+
+## Setup Guide
+
+
+1. Clone repository.
+```
+git clone https://github.com/CodeLanka/SensorDataCollector.git
+```
+
+2. Install yarn globally (optional)
+```
+npm install -g yarn
+```
+
+3. Install expo globally
+```
+npm install -g expo-cli
+```
+
+4. Install dependencies (Assume that you already have yarn installed globally)
+```
+yarn
+```
+
+5. Start development environment
+```
+expo start
+```
+
+Happy coding!
+
+![setup](https://user-images.githubusercontent.com/17959894/46583000-6506f180-ca6d-11e8-907f-56f6531e1f56.gif)
