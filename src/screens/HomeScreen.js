@@ -4,101 +4,109 @@ import {
     TouchableOpacity,
     View,
     Text,
-    Image,
-    Dimensions,
+    Modal,
+    Picker,
+    Button,
 } from 'react-native';
 
-export const dimensions = {
-    fullHeight: Dimensions.get('window').height,
-    fullWidth: Dimensions.get('window').width,
-};
+import SensorIcon from '../component/SensorIcon';
+import ListItem from '../component/ListItem';
+import Divider from '../component/Divider';
 
 // TODO: Break divider into a component
 export default class HomeScreen extends React.Component {
+    state = {
+        modalVisible: false,
+        levelOne: null,
+    };
+
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
     render() {
         const {
             container,
             actionContainer,
             sensorContainer,
             detailContainer,
-            dividerText,
-            dividerContainer,
             actionButtonContainer,
             actionButton,
             actionButtonText,
             sensorIconContainer,
-            sensorIcon,
-            icon,
-            iconText,
             detailListContainer,
-            listItem,
-            listLabel,
-            listValue,
+            modalContainer,
+            modalInnerContainer,
         } = styles;
+        const { modalVisible, levelOne } = this.state;
         return (
             <View style={container}>
+                <Modal
+                    animationType="slide"
+                    transparent
+                    visible={modalVisible}
+                    onRequestClose={() => { this.setModalVisible(false); }}
+                >
+                    <View style={modalContainer}>
+                        <Divider title="Please select current status" />
+                        <View style={modalInnerContainer}>
+                            <View style={{ flex: 1 }}>
+                                <Picker
+                                    selectedValue={levelOne}
+                                    onValueChange={itemValue => this.setState({ levelOne: itemValue })}
+                                    style={{ height: 40 }}
+                                >
+                                    <Picker.Item label="Please select transpotation method" value={null} />
+                                    <Picker.Item label="Train" value="Train" />
+                                    <Picker.Item label="Bus" value="Bus" />
+                                    <Picker.Item label="Walking" value="Walking" />
+                                    <Picker.Item label="Car/Personal vehicle" value="Personal" />
+                                    <Picker.Item label="Bike" value="Bike" />
+                                    <Picker.Item label="Bicycle" value="Bicycle" />
+                                    <Picker.Item label="Other" value="other" />
+                                </Picker>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                <View style={{ marginLeft: 5 }}>
+                                    <Button
+                                        onPress={() => this.setModalVisible(!modalVisible)}
+                                        title="CANCEL"
+                                        color="#5b5b5b"
+                                    />
+                                </View>
+                                <View style={{ marginLeft: 5 }}>
+                                    <Button
+                                        onPress={() => this.setModalVisible(!modalVisible)}
+                                        title="START"
+                                        color="#12806a"
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={actionContainer}>
                     <View style={actionButtonContainer}>
-                        <TouchableOpacity style={actionButton}>
+                        <TouchableOpacity style={actionButton} onPress={() => { this.setModalVisible(true); }}>
                             <Text style={actionButtonText}>START</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={sensorContainer}>
-                    <View style={dividerContainer}>
-                        <Text style={dividerText}>Active sensors</Text>
-                    </View>
+                    <Divider title="Active sensors" />
                     <View style={sensorIconContainer}>
-                        <View style={sensorIcon}>
-                            <Image
-                                style={icon}
-                                source={require('../../assets/images/compass-gary-100.png')}
-                            />
-                            <Text style={iconText}>Compass</Text>
-                        </View>
-                        <View style={sensorIcon}>
-                            <Image
-                                style={icon}
-                                source={require('../../assets/images/gyroscope-green-100.png')}
-                            />
-                            <Text style={iconText}>Accelerometer & Gyroscope</Text>
-                        </View>
-                        <View style={sensorIcon}>
-                            <Image
-                                style={icon}
-                                source={require('../../assets/images/gps-green-100.png')}
-                            />
-                            <Text style={iconText}>GPS</Text>
-                        </View>
-                        <View style={sensorIcon}>
-                            <Image
-                                style={icon}
-                                source={require('../../assets/images/proximity-green-100.png')}
-                            />
-                            <Text style={iconText}>Proximity</Text>
-                        </View>
+                        <SensorIcon title="Compass" imagePath={require('../../assets/images/gyroscope-green-100.png')} />
+                        <SensorIcon title="Accelerometer & Gyroscope" imagePath={require('../../assets/images/gyroscope-green-100.png')} />
+                        <SensorIcon title="GPS" imagePath={require('../../assets/images/gps-green-100.png')} />
+                        <SensorIcon title="Proximity" imagePath={require('../../assets/images/proximity-green-100.png')} />
                     </View>
                     <View style={detailContainer}>
-                        <View style={dividerContainer}>
-                            <Text style={dividerText}>Other informations</Text>
-                        </View>
+                        <Divider title="Other informations" />
                         <View style={detailListContainer}>
-                            <View style={listItem}>
-                                <Text style={listLabel}>Current status</Text>
-                                <Text style={listValue}>N/A</Text>
-                            </View>
-                            <View style={listItem}>
-                                <Text style={listLabel}>Device type</Text>
-                                <Text style={listValue}>Nexus 5X</Text>
-                            </View>
-                            <View style={listItem}>
-                                <Text style={listLabel}>Operating system</Text>
-                                <Text style={listValue}>Android 8.1.0</Text>
-                            </View>
-                            <View style={listItem}>
-                                <Text style={listLabel}>Identification code</Text>
-                                <Text style={listValue}>GDG_TESTERS</Text>
-                            </View>
+                            <ListItem label="Current status" value="N/A" />
+                            <ListItem label="Device type" value="Nexus 5X" />
+                            <ListItem label="Operating system" value="Android 8.1.0" />
+                            <ListItem label="Identification code" value="GDG_TESTERS" />
                         </View>
                     </View>
                 </View>
@@ -124,17 +132,10 @@ const styles = StyleSheet.create({
     },
     detailContainer: {
     },
-    dividerContainer: {
-        backgroundColor: '#808080',
-        padding: 5,
-    },
-    dividerText: {
-        color: '#fff',
-    },
     actionButtonContainer: {
         height: 100,
         width: 250,
-        backgroundColor: '#008080',
+        backgroundColor: '#0E6655',
         borderRadius: 50,
     },
     actionButton: {
@@ -142,6 +143,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#12806a',
         justifyContent: 'center',
         borderRadius: 50,
+        borderColor: '#0E6655',
+        borderWidth: 5,
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowOpacity: 0.1,
+        elevation: 5,
+        shadowRadius: 50,
+        shadowOffset: { width: 1, height: 13 },
+
     },
     actionButtonText: {
         fontSize: 38,
@@ -151,30 +160,18 @@ const styles = StyleSheet.create({
     sensorIconContainer: {
         flexDirection: 'row',
     },
-    sensorIcon: {
-        flex: 1,
-        padding: 10,
-    },
-    icon: {
-        width: (dimensions.width - 10) / 4,
-        resizeMode: 'contain',
-    },
-    iconText: {
-        textAlign: 'center',
-    },
     detailListContainer: {
         padding: 5,
     },
-    listItem: {
-        flexDirection: 'row',
-        paddingVertical: 5,
-        borderBottomColor: '#e9e9e9',
-        borderBottomWidth: 1,
-    },
-    listLabel: {
+    modalContainer: {
         flex: 1,
+        marginVertical: 100,
+        marginHorizontal: 20,
+        backgroundColor: '#fff',
+        elevation: 5,
     },
-    listValue: {
+    modalInnerContainer: {
         flex: 1,
+        padding: 5,
     },
 });
