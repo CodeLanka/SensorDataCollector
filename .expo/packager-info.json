@@ -1,9 +1,0 @@
-{
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://qz-8cm.lakmalniranga.sensordatacollector.exp.direct",
-  "packagerNgrokUrl": "https://packager.qz-8cm.lakmalniranga.sensordatacollector.exp.direct",
-  "ngrokPid": 87107,
-  "packagerPort": 19001,
-  "packagerPid": 87088,
-  "devToolsPort": 19002
-}
